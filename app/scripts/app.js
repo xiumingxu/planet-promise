@@ -66,6 +66,9 @@ Hint: you'll probably still need to use .map.
 		// 		getJSON(url).then(createPlanetThumb);
 		// 	});
 		// });
-		getJSON('../data/earth-like-results.json').then().catch();
+		getJSON('../data/earth-like-results.json')
+			.then((res) => Promise.all(res.results.map(getJSON)))
+			.then((vals) => vals.map((val) => createPlanetThumb(val)))
+			.catch(() => addSearchHeader('unknown'));
 	});
 })(document);
